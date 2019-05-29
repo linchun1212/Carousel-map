@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        #div{
+            width: 300px;
+            height: 300px;
+            border: 1px solid red;
+            position: relative;
+            margin: 100px auto;
+            overflow: hidden;
+        }
+        #div ul{
+            height: 300px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #div ul li{
+            width: 300px;
+            height: 300px;
+            float: left;
+        }
+        #div ul li img{
+            width: 300px;
+            height: 300px;
+        }
+        #div .btn{
+            width: 20px;
+            height: 50px;
+            position: absolute;
+            margin-top: -25px;
+            top: 50%;
+        }
+        .btn_left{
+            left: 0;  
+        }
+        .btn_right{
+            right: 0;  
+        }
+    </style>
+</head>
+<body>
+    <div id="div">
+        <ul>
+            <li>
+                <a href=""><img src="images/erha.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href=""><img src="images/er02.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href=""><img src="images/er03.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href=""><img src="images/jimao01.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href=""><img src="images/shapi01.jpg" alt=""></a>
+            </li>
+            <li>
+                <a href=""><img src="images/shapi02.jpg" alt=""></a>
+            </li>
+        </ul>
+        <button class="btn btn_right">&gt;</button>
+        <button class="btn btn_left">&lt;</button>
+    </div>
+
+    <script src="tools.js"></script>
+    <script>
+        var oDiv = byId('div');
+        var oUl = oDiv.getElementsByTagName('ul')[0];
+        var oLi = oDiv.getElementsByTagName('li');
+        var btnLeft = oDiv.getElementsByClassName('btn_left')[0];
+        var btnRight = oDiv.getElementsByClassName('btn_right')[0];
+        var i=0;
+        oUl.innerHTML+=oUl.innerHTML
+        var oLiWidth = parseInt(getStyle(oLi[0],'width'))
+        var oUlWidth = oLiWidth*oLi.length; 
+        oUl.style.width= oUlWidth+"px"
+        function fn(){
+            var huan = -i*oLiWidth;
+            linearMove({
+			ele:oUl,
+			prop:'left',
+			target:huan
+		    })
+        }
+        function fn2(){
+            if(i<oLi.length/2){
+                i++
+            }
+            else{
+                oUl.style.left = 0
+                i = 1
+            }
+            fn()
+        }     
+        btnRight.onclick= function(){
+            fn2()
+        }
+        btnLeft.onclick= function(){
+            if(i>0){
+                i--
+            }
+            else{
+                oUl.style.left = -(oLi.length/2)*oLiWidth+'px'
+                i=(oLi.length/2)-1
+            }
+            fn()
+        }
+        var timer
+        function autoPlay(){
+            clearInterval(timer)
+            timer = setInterval(function(){
+            fn2()
+            },3000)
+        }
+        autoPlay()
+        oDiv.onmouseover=function(){
+            clearInterval(timer)
+        }
+       oDiv.onmouseout=function(){
+           setInterval(timer)
+           autoPlay()
+       }
+    
+    
+    </script>
+</body>
+</html>
